@@ -1,0 +1,17 @@
+# docker
+镜像关系：
+ - cluster
+   - cluster1
+   - cluster2
+   - cluster3
+   - cluster4
+   - cluster5
+   - cluster6
+
+# zookeeper
+安装版本：zookeeper-3.4.8.tar.gz
+运行主机：cluster1、cluster2、cluster3、cluster4、cluster5
+
+# solr
+安装版本：solr-4.10.4.tgz
+运行主机：cluster1、cluster2、cluster3、cluster4、cluster5、cluster6

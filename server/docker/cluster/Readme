@@ -1,0 +1,31 @@
+# 安装Docker
+yum install docker-io
+
+# 构建Dockerfile
+docker build -t "iisquare/cluster" -f Dockerfile .
+
+# 创建并运行容器
+docker run --name cluster --hostname cluster -v /mnt/hgfs/workfiles/docker/cluster/data/cluster:/data -d -P iisquare/cluster
+
+# 固定IP配置（100为容器，131为宿主，2为网关）
+/opt/pipework/pipework br0 cluster 192.168.163.100/24@192.168.163.2
+ip addr add 192.168.163.131/24 dev br0; \
+    ip addr del 192.168.163.131/24 dev eth0; \
+    brctl addif br0 eth0; \
+    ip route del default; \
+    ip route add default gw 192.168.163.2 dev br0
+
+# 重新运行
+docker start cluster
+
+# 保存容器内修改
+docker commit CONTAINER_ID iisquare/cluster
+
+# 使用管理脚本
+./docker-container.sh create # 创建容器
+./docker-container.sh start # 启动容器
+./docker-template.sh bridge # 桥接
+./cluster-rsa.sh generate # 生成rsa
+./cluster-rsa.sh authorized # 发布授权文件
+./cluster-server.sh zookeeper start # 启动容器内服务
+
