@@ -24,6 +24,12 @@ zookeeper()
     fi
 }
 
+tomcat()
+{
+    local nodeCount=6
+    local serverDir=/opt/apache-tomcat-7.0.65
+}
+
 if [ "${1}"  ];then
     $1 $*
 else

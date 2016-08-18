@@ -1,2 +1,10 @@
 127.0.0.1   localhost
 ::1         localhost
+192.168.163.131 CoS6
+192.168.163.100 cluster
+192.168.163.101 cluster1
+192.168.163.102 cluster2
+192.168.163.103 cluster3
+192.168.163.104 cluster4
+192.168.163.105 cluster5
+192.168.163.106 cluster6

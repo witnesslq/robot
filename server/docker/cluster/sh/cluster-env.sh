@@ -6,8 +6,9 @@ nodeCount=6
 password="admin888"
 templateDir=$(dirname $0)/template
 hostsFile=/etc/hosts
+mntDocker=/mnt/hgfs/workfiles/docker
 
-sshExpect()
+sshExpect() # 自动交互执行远程Shell
 {
 expect <<EOT
 spawn $1
@@ -58,8 +59,24 @@ case "$1" in
             sshExpect "${cmd}"
         done
     ;;
+    mkdir ) # 创建数据目录
+        for((i=1; i<=${nodeCount}; i++))
+        do
+            nodeName="cluster${i}"
+            echo "${1} ${mntDocker}/cluster/data/${nodeName}/${2}"
+            mkdir -p ${mntDocker}/cluster/data/${nodeName}/${2}
+        done
+    ;;
+    touch ) # 创建文件
+        for((i=1; i<=${nodeCount}; i++))
+        do
+            nodeName="cluster${i}"
+            echo "${1} ${mntDocker}/cluster/data/${nodeName}/${2}"
+            touch ${mntDocker}/cluster/data/${nodeName}/${2}
+        done
+    ;;
     * )
-        echo "Usage: [rsa-generate|rsa-authorized|hosts]"
+        echo "Usage: [rsa-generate|rsa-authorized|hosts|mkdir|touch]"
     ;;
 esac
 

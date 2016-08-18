@@ -12,8 +12,8 @@ docker run --name cluster --hostname cluster -v /mnt/hgfs/workfiles/docker/clust
 ip addr add 192.168.163.131/24 dev br0; \
     ip addr del 192.168.163.131/24 dev eth0; \
     brctl addif br0 eth0; \
-    ip route del default; \
-    ip route add default gw 192.168.163.2 dev br0
+    route del default; \
+    route add default gw 192.168.163.2 dev br0
 
 # 重新运行
 docker start cluster
@@ -25,7 +25,7 @@ docker commit CONTAINER_ID iisquare/cluster
 ./docker-container.sh create # 创建容器
 ./docker-container.sh start # 启动容器
 ./docker-template.sh bridge # 桥接
-./cluster-rsa.sh generate # 生成rsa
-./cluster-rsa.sh authorized # 发布授权文件
+./cluster-env.sh rsa-generate # 生成rsa
+./cluster-env.sh rsa-authorized # 发布授权文件
+./cluster-env.sh hosts # 同步hosts文件，默认为docker0内部IP
 ./cluster-server.sh zookeeper start # 启动容器内服务
-

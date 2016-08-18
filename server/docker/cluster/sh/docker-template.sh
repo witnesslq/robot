@@ -9,8 +9,8 @@ case "$1" in
         ip addr add 192.168.163.131/24 dev br0;
         ip addr del 192.168.163.131/24 dev eth0;
         brctl addif br0 eth0;
-        ip route del default;
-        ip route add default gw 192.168.163.2 dev br0
+        route del default;
+        route add default gw 192.168.163.2 dev br0
         ifconfig
     ;;
     create )
