@@ -77,8 +77,21 @@ case "$1" in
             touch ${mntDocker}/cluster/data/${nodeName}/${2}
         done
     ;;
+    scp ) # 拷贝hosts文件
+        if [ "${2}" -a "${3}" ]; then
+            echo "${1} scp ${2} ${3}"
+            for((i=1; i<=${nodeCount}; i++))
+            do
+                nodeName="cluster${i}"
+                cmd="scp ${2} root@${nodeName}:${3}"
+                sshExpect "${cmd}"
+            done
+        else
+            echo "Usage: scp localFile destFile"
+        fi
+    ;;
     * )
-        echo "Usage: [rsa-generate|rsa-authorized|hosts|mkdir|touch]"
+        echo "Usage: [rsa-generate|rsa-authorized|hosts|mkdir|touch|scp]"
     ;;
 esac
 

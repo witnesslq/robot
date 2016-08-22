@@ -41,6 +41,24 @@ tomcat()
     fi
 }
 
+cmd()
+{
+    local nodeCount=6
+    if [ "${2}" ]; then
+        local i
+        for((i=1; i<=${nodeCount}; i++))
+        do
+            local nodeName="cluster${i}"
+            echo "----------------------------"
+            echo "${nodeName}.${1}:${2}"
+            echo "----------------------------"
+            sshCmd ${nodeName} "${2}"
+        done
+    else
+        echo "Usage: ${1} shell"
+    fi
+}
+
 if [ "${1}"  ];then
     $1 $*
 else
