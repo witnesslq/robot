@@ -36,10 +36,12 @@ case "$1" in
         for((i=1; i<=${nodeCount}; i++))
         do
             nodeName="cluster${i}"
+            echo "generate ${nodeName}..."
             cmd="ssh -p 22 root@${nodeName} \"cd ~;ssh-keygen -t rsa -P '';cat ~/.ssh/id_rsa.pub\""
             sshExpect "${cmd}"|sed -n "/ssh-rsa/p">>${templateDir}/authorized_keys
         done
-        cat ${authFile}        
+        echo "***********authorized_keys***********"
+        cat ${templateDir}/authorized_keys
     ;;
     rsa-authorized ) # 拷贝授权文件
         echo "${1} scp authorized_keys..."
